@@ -1,0 +1,49 @@
+<template>
+    <div class="butler-container">
+        
+        <div class="butler-launcher" onclick={toggleChat} if:false={isOpen}>
+            <img src={butlerIconUrl} alt="Ask Sebastian" class="avatar-icon"/>
+            <div class="launcher-tooltip">May I help you?</div>
+        </div>
+
+        <div class="chat-window" if:true={isOpen}>
+            <div class="chat-header">
+                <div class="header-info">
+                    <img src={butlerIconUrl} class="header-avatar"/>
+                    <div class="header-text">
+                        <span class="butler-name">Sebastian</span>
+                        <span class="butler-role">The Royal Butler</span>
+                    </div>
+                </div>
+                <button class="close-btn" onclick={toggleChat} title="Close">×</button>
+            </div>
+
+            <div class="chat-messages" lwc:ref="messageList">
+                <template for:each={messages} for:item="msg">
+                    <div key={msg.id} class={msg.cssClass}>
+                        <div class="bubble">
+                            {msg.text}
+                        </div>
+                    </div>
+                </template>
+                
+                <div if:true={isThinking} class="message-row incoming">
+                    <div class="bubble thinking">
+                        <span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-input">
+                <textarea 
+                       placeholder="ご用命を入力してください..." 
+                       oninput={handleInput}
+                       onkeydown={handleKeyDown}
+                       lwc:ref="inputField"></textarea>
+                <button onclick={sendMessage} class="send-btn">
+                    <svg viewBox="0 0 24 24" class="send-icon"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</template>

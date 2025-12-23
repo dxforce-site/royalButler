@@ -40,12 +40,13 @@ public with sharing class RoyalButlerController {
             }
 
         } catch (Exception e) {
-            String errorMsg = 'Exception: ' + e.getMessage() + ' Stack: ' + e.getStackTraceString();
-            System.debug(errorMsg);
+            String debugMsg = 'Exception: ' + e.getMessage() + ' Stack: ' + e.getStackTraceString();
+            System.debug(debugMsg);
             
-            // デバッグ用に詳細なエラーメッセージをクライアントに返す
-            AuraHandledException ahe = new AuraHandledException(errorMsg);
-            ahe.setMessage(errorMsg);
+            // ユーザー向けの一般的なエラーメッセージ
+            String userMsg = '申し訳ございません。執事セバスチャンとの通信中にエラーが発生いたしました。';
+            AuraHandledException ahe = new AuraHandledException(userMsg);
+            ahe.setMessage(userMsg);
             throw ahe;
         }
     }
